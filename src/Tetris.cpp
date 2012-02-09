@@ -25,6 +25,7 @@ Tetris::Tetris() : m_nextState(STATE_NULL)
     m_window.Create(sf::VideoMode(600,600), "Tetris", sf::Style::Close);
     m_music.OpenFromFile("resources/audio/tetris_theme.ogg");
     m_music.SetVolume(60.0);
+    m_music.SetLoop(true);
     m_currentState = new StateTitle(*this);
 
     // Initializing the seed for the rand() function
@@ -48,13 +49,12 @@ Tetris::~Tetris()
 /////////////////////////////////////////////////
 void Tetris::Run()
 {
+    // Playing the music
+    m_music.Play();
+
     // Game loop
     while(m_nextState != STATE_EXIT)
     {
-        // Starting to play the music if it's stopped
-        if(m_music.GetStatus() == sf::Music::Stopped)
-            m_music.Play();
-
         m_currentState->HandleEvents();
         m_currentState->Logic(m_window.GetFrameTime());
         ChangeState();
