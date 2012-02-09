@@ -1,0 +1,11 @@
+bin/
+doxygen/
+ext/
+obj/
+resources/audio/tetris_theme.ogg
+resources/Thumbs.db
+resources/*/Thumbs.db
+*.dll
+*.depend
+*.layout
+*.cbp
