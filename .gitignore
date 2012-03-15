@@ -8,4 +8,5 @@ resources/*/Thumbs.db
 *.dll
 *.depend
 *.layout
+*.layout.cbTemp
 *.cbp
