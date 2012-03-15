@@ -38,7 +38,7 @@ class StateTitle : public GameState
         ///
         /// Process the user inputs.
         /////////////////////////////////////////////////
-        void HandleEvents();
+        void handleEvents();
 
         /////////////////////////////////////////////////
         /// \brief Logic.
@@ -47,14 +47,14 @@ class StateTitle : public GameState
         ///
         /// \param elapsedTime : Elapsed time since the last frame.
         /////////////////////////////////////////////////
-        void Logic(sf::Uint32 elapsedTime);
+        void logic(sf::Uint32 elapsedTime);
 
         /////////////////////////////////////////////////
         /// \brief Rendering
         ///
         /// Draws the background image on the window.
         /////////////////////////////////////////////////
-        void Render();
+        void render();
 
     protected:
 

@@ -37,7 +37,7 @@ class GameState : public GameObject
         ///
         /// Processes all the user's input events.
         /////////////////////////////////////////////////
-        virtual void HandleEvents() = 0;
+        virtual void handleEvents() = 0;
 
         /////////////////////////////////////////////////
         /// \brief Logic.
@@ -46,14 +46,14 @@ class GameState : public GameObject
         ///
         /// \param elapsedTime : Elapsed time since the last frame.
         /////////////////////////////////////////////////
-        virtual void Logic(sf::Uint32 elapsedTime) = 0;
+        virtual void logic(sf::Uint32 elapsedTime) = 0;
 
         /////////////////////////////////////////////////
         /// \brief Rendering.
         ///
         /// Handles the rendering of the game state.
         /////////////////////////////////////////////////
-        virtual void Render() = 0;
+        virtual void render() = 0;
 };
 
 #endif // GAMESTATE_HPP

@@ -24,7 +24,7 @@ StatePlay::StatePlay(Tetris& tetris) :
     m_score(0),
     m_lvl(0),
     m_linesDestroyed(0),
-    m_normalGameSpeed(450),
+    m_normalGameSpeed(450000),
     m_gameSpeed(m_normalGameSpeed),
     m_gameOver(false),
     m_gameOverTimer(0),
@@ -33,32 +33,32 @@ StatePlay::StatePlay(Tetris& tetris) :
     m_rotate(false)
 {
     // Loading and initializing resources
-    m_bgTexture.LoadFromFile("resources/images/play_background.png");
-    m_bgSprite.SetTexture(m_bgTexture);
+    m_bgTexture.loadFromFile("resources/images/play_background.png");
+    m_bgSprite.setTexture(m_bgTexture);
 
-    m_gameOverTexture.LoadFromFile("resources/images/game_over.png");
-    m_gameOverSprite.SetTexture(m_gameOverTexture);
-    m_gameOverSprite.SetPosition(m_window.GetWidth()/2 - m_gameOverSprite.GetSize().x/2,
-                                 m_window.GetHeight()/2 - m_gameOverSprite.GetSize().y/2);
+    m_gameOverTexture.loadFromFile("resources/images/game_over.png");
+    m_gameOverSprite.setTexture(m_gameOverTexture);
+    m_gameOverSprite.setPosition(m_window.getSize().x/2 - m_gameOverSprite.getGlobalBounds().width/2,
+                                 m_window.getSize().y/2 - m_gameOverSprite.getGlobalBounds().height/2);
 
-    m_blocksSpritesheet.LoadFromFile("resources/images/blocks_spritesheet.png");
+    m_blocksSpritesheet.loadFromFile("resources/images/blocks_spritesheet.png");
 
-    m_font.LoadFromFile("resources/fonts/visitor1.ttf");
+    m_font.loadFromFile("resources/fonts/visitor1.ttf");
 
     // Creating the texts
-    m_textScore.SetFont(m_font);
-    m_textScore.SetColor(sf::Color(205, 5, 5));
-    m_textLvl.SetFont(m_font);
-    m_textLvl.SetColor(sf::Color(205, 5, 5));
-    m_textLinesDestroyed.SetFont(m_font);
-    m_textLinesDestroyed.SetColor(sf::Color(205, 5, 5));
+    m_textScore.setFont(m_font);
+    m_textScore.setColor(sf::Color(205, 5, 5));
+    m_textLvl.setFont(m_font);
+    m_textLvl.setColor(sf::Color(205, 5, 5));
+    m_textLinesDestroyed.setFont(m_font);
+    m_textLinesDestroyed.setColor(sf::Color(205, 5, 5));
 
-    UpdateTexts();
+    updateTexts();
 
     // Initializing the figures
-    m_currentFig = GenerateRandomFig();
-    m_nextFig = GenerateRandomFig();
-    m_nextFig->SetNextFigPos();
+    m_currentFig = generateRandomFig();
+    m_nextFig = generateRandomFig();
+    m_nextFig->setNextFigPos();
 }
 
 
@@ -71,23 +71,23 @@ StatePlay::~StatePlay()
 
 
 /////////////////////////////////////////////////
-void StatePlay::HandleEvents()
+void StatePlay::handleEvents()
 {
     sf::Event ev;
-    while(m_window.PollEvent(ev))
+    while(m_window.pollEvent(ev))
     {
         // X window button
-        if(ev.Type == sf::Event::Closed)
+        if(ev.type == sf::Event::Closed)
         {
-            m_tetris.SetNextState(STATE_EXIT);
+            m_tetris.setNextState(STATE_EXIT);
         }
-        else if(ev.Type == sf::Event::KeyPressed)
+        else if(ev.type == sf::Event::KeyPressed)
         {
-            switch(ev.Key.Code)
+            switch(ev.key.code)
             {
             // Escape pressed
             case sf::Keyboard::Escape:
-                m_tetris.SetNextState(STATE_MENU);
+                m_tetris.setNextState(STATE_MENU);
                 break;
 
             // Space pressed
@@ -112,7 +112,7 @@ void StatePlay::HandleEvents()
     }
 
     // Setting the game speed. Faster if "Down" is pressed.
-    if(sf::Keyboard::IsKeyPressed(sf::Keyboard::Down))
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
         m_gameSpeed = m_normalGameSpeed / 10;
     else
         m_gameSpeed = m_normalGameSpeed;
@@ -120,7 +120,7 @@ void StatePlay::HandleEvents()
 
 
 /////////////////////////////////////////////////
-void StatePlay::Logic(sf::Uint32 elapsedTime)
+void StatePlay::logic(sf::Uint32 elapsedTime)
 {
     m_moveDownTimer += elapsedTime;
 
@@ -131,11 +131,11 @@ void StatePlay::Logic(sf::Uint32 elapsedTime)
         if(m_figMoveDirection != DIRECT_NULL)
         {
             Figure movedFig = *m_currentFig;
-            movedFig.Move(m_figMoveDirection);
+            movedFig.move(m_figMoveDirection);
 
             // Moves the figure if no collision detected
-            if(!m_map.Collision(movedFig))
-                m_currentFig->Move(m_figMoveDirection);
+            if(!m_map.collision(movedFig))
+                m_currentFig->move(m_figMoveDirection);
 
             m_figMoveDirection = DIRECT_NULL;
         }
@@ -144,11 +144,11 @@ void StatePlay::Logic(sf::Uint32 elapsedTime)
         if(m_rotate)
         {
             Figure rotatedFig = *m_currentFig;
-            rotatedFig.Rotate();
+            rotatedFig.rotate();
 
             // Rotates the figure if no collision detected
-            if(!m_map.Collision(rotatedFig))
-                m_currentFig->Rotate();
+            if(!m_map.collision(rotatedFig))
+                m_currentFig->rotate();
 
             m_rotate = false;
         }
@@ -157,35 +157,35 @@ void StatePlay::Logic(sf::Uint32 elapsedTime)
         if(m_moveDownTimer >= m_gameSpeed)
         {
             Figure movedFig = *m_currentFig;
-            movedFig.Move(DIRECT_DOWN);
+            movedFig.move(DIRECT_DOWN);
 
             // If the figure can't go down any more (collision)
-            if(m_map.Collision(movedFig))
+            if(m_map.collision(movedFig))
             {
                 // Test for game over
-                if(m_currentFig->IsOutOfGame())
+                if(m_currentFig->isOutOfGame())
                     m_gameOver = true;
                 else
                 {
                     // Adding the figure's blocks to the map and creating new figures
                     // (next figure becomes the current one).
-                    m_map.AddFigure(*m_currentFig);
+                    m_map.addFigure(*m_currentFig);
 
                     delete m_currentFig;
-                    m_currentFig = new Figure(m_tetris, m_nextFig->GetType(), m_blocksSpritesheet);
+                    m_currentFig = new Figure(m_tetris, m_nextFig->getType(), m_blocksSpritesheet);
 
                     delete m_nextFig;
-                    m_nextFig = GenerateRandomFig();
-                    m_nextFig->SetNextFigPos();
+                    m_nextFig = generateRandomFig();
+                    m_nextFig->setNextFigPos();
                 }
             }
             else
-                m_currentFig->Move(DIRECT_DOWN);
+                m_currentFig->move(DIRECT_DOWN);
 
             m_moveDownTimer = 0;
 
             // Searching for completed lines and adding score
-            IncScore(m_map.DestroyCompleteLines());
+            incScore(m_map.destroyCompleteLines());
         }
     }
     // End of game
@@ -194,13 +194,13 @@ void StatePlay::Logic(sf::Uint32 elapsedTime)
         if(m_gameOverTimer >= 2000)
         {
             ScoreManager scores(5);
-            scores.LoadFromFile("resources/scores");
+            scores.loadFromFile("resources/scores");
 
             // Checking if the score is a new high score
-            if(m_score > 0 && scores.IsNewScore(m_score))
-                m_tetris.SetNextState(STATE_NEW_SCORE);
+            if(m_score > 0 && scores.isNewScore(m_score))
+                m_tetris.setNextState(STATE_NEW_SCORE);
             else
-                m_tetris.SetNextState(STATE_MENU);
+                m_tetris.setNextState(STATE_MENU);
         }
         else
             m_gameOverTimer += elapsedTime;
@@ -209,35 +209,35 @@ void StatePlay::Logic(sf::Uint32 elapsedTime)
 
 
 /////////////////////////////////////////////////
-void StatePlay::Render()
+void StatePlay::render()
 {
-    m_window.Clear();
+    m_window.clear();
 
-    m_window.Draw(m_bgSprite);
-    m_window.Draw(m_textScore);
-    m_window.Draw(m_textLvl);
-    m_window.Draw(m_textLinesDestroyed);
+    m_window.draw(m_bgSprite);
+    m_window.draw(m_textScore);
+    m_window.draw(m_textLvl);
+    m_window.draw(m_textLinesDestroyed);
 
-    m_map.Draw();
-    m_currentFig->Draw();
-    m_nextFig->Draw();
+    m_map.draw();
+    m_currentFig->draw();
+    m_nextFig->draw();
 
     if(m_gameOver)
-        m_window.Draw(m_gameOverSprite);
+        m_window.draw(m_gameOverSprite);
 
-    m_window.Display();
+    m_window.display();
 }
 
 
 /////////////////////////////////////////////////
-unsigned long StatePlay::GetScore()
+unsigned long StatePlay::getScore()
 {
     return m_score;
 }
 
 
 /////////////////////////////////////////////////
-void StatePlay::IncScore(unsigned int nbLinesDestroyed)
+void StatePlay::incScore(unsigned int nbLinesDestroyed)
 {
     // Increasing the score
     switch(nbLinesDestroyed)
@@ -270,32 +270,32 @@ void StatePlay::IncScore(unsigned int nbLinesDestroyed)
             m_normalGameSpeed -= 50;
     }
 
-    UpdateTexts();
+    updateTexts();
 }
 
 
 /////////////////////////////////////////////////
-void StatePlay::UpdateTexts()
+void StatePlay::updateTexts()
 {
     std::stringstream scoreStr;
     scoreStr << m_score;
-    m_textScore.SetString(scoreStr.str());
-    m_textScore.SetPosition(450 - m_textScore.GetRect().Width / 2, 220);
+    m_textScore.setString(scoreStr.str());
+    m_textScore.setPosition(450 - m_textScore.getGlobalBounds().width / 2, 220);
 
     std::stringstream lvlStr;
     lvlStr << m_lvl;
-    m_textLvl.SetString(lvlStr.str());
-    m_textLvl.SetPosition(375 - m_textLvl.GetRect().Width / 2, 345);
+    m_textLvl.setString(lvlStr.str());
+    m_textLvl.setPosition(375 - m_textLvl.getGlobalBounds().width / 2, 345);
 
     std::stringstream linesStr;
     linesStr << m_linesDestroyed;
-    m_textLinesDestroyed.SetString(linesStr.str());
-    m_textLinesDestroyed.SetPosition(525 - m_textLinesDestroyed.GetRect().Width / 2, 345);
+    m_textLinesDestroyed.setString(linesStr.str());
+    m_textLinesDestroyed.setPosition(525 - m_textLinesDestroyed.getGlobalBounds().width / 2, 345);
 }
 
 
 /////////////////////////////////////////////////
-Figure* StatePlay::GenerateRandomFig()
+Figure* StatePlay::generateRandomFig()
 {
     BlockType type = (BlockType)(rand() % (LAST_BLOCK_TYPE + 1) + FIRST_BLOCK_TYPE);
 

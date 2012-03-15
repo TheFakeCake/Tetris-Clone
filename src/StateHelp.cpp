@@ -16,40 +16,40 @@
 StateHelp::StateHelp(Tetris& tetris) : GameState(tetris)
 {
     // Loading the background
-    m_bgTexture.LoadFromFile("resources/images/help_background.png");
-    m_bgSprite.SetTexture(m_bgTexture);
+    m_bgTexture.loadFromFile("resources/images/help_background.png");
+    m_bgSprite.setTexture(m_bgTexture);
 }
 
 
 /////////////////////////////////////////////////
-void StateHelp::HandleEvents()
+void StateHelp::handleEvents()
 {
     sf::Event ev;
-    while(m_window.PollEvent(ev))
+    while(m_window.pollEvent(ev))
     {
         // X window button clicked
-        if(ev.Type == sf::Event::Closed)
+        if(ev.type == sf::Event::Closed)
         {
-            m_tetris.SetNextState(STATE_EXIT);
+            m_tetris.setNextState(STATE_EXIT);
         }
         // A key is pressed
-        else if(ev.Type == sf::Event::KeyPressed)
+        else if(ev.type == sf::Event::KeyPressed)
         {
-            m_tetris.SetNextState(STATE_MENU);
+            m_tetris.setNextState(STATE_MENU);
         }
     }
 }
 
 
 /////////////////////////////////////////////////
-void StateHelp::Logic(sf::Uint32 elapsedTime)
+void StateHelp::logic(sf::Uint32 elapsedTime)
 {}
 
 
 /////////////////////////////////////////////////
-void StateHelp::Render()
+void StateHelp::render()
 {
-    m_window.Clear();
-    m_window.Draw(m_bgSprite);
-    m_window.Display();
+    m_window.clear();
+    m_window.draw(m_bgSprite);
+    m_window.display();
 }

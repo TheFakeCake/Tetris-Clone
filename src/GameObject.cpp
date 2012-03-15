@@ -13,7 +13,7 @@
 /////////////////////////////////////////////////
 GameObject::GameObject(Tetris& tetris) :
     m_tetris(tetris),
-    m_window(tetris.GetWindow())
+    m_window(tetris.getWindow())
 {}
 
 

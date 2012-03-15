@@ -57,7 +57,7 @@ class ScoreManager
         ///
         /// \param fileName : The file in which the scores a stored.
         /////////////////////////////////////////////////
-        void LoadFromFile(std::string fileName);
+        void loadFromFile(std::string fileName);
 
         /////////////////////////////////////////////////
         /// \brief Scores writing.
@@ -66,7 +66,7 @@ class ScoreManager
         ///
         /// \param fileName : The file in which the scores have to be written.
         /////////////////////////////////////////////////
-        void Write(std::string fileName);
+        void write(std::string fileName);
 
         /////////////////////////////////////////////////
         /// \brief Score comparison.
@@ -77,7 +77,7 @@ class ScoreManager
         ///
         /// \return True if score is a new high score, otherwise False.
         /////////////////////////////////////////////////
-        bool IsNewScore(unsigned int score);
+        bool isNewScore(unsigned int score);
 
         /////////////////////////////////////////////////
         /// \brief Adding score.
@@ -87,14 +87,14 @@ class ScoreManager
         /// \param player : The player's name.
         /// \param score : The score.
         /////////////////////////////////////////////////
-        void AddScore(std::string player, unsigned int score);
+        void addScore(std::string player, unsigned int score);
 
         /////////////////////////////////////////////////
         /// \brief Returns the number of stored scores.
         ///
         /// \return Number of stored scores.
         /////////////////////////////////////////////////
-        unsigned int GetNbScores();
+        unsigned int getNbScores();
 
         /////////////////////////////////////////////////
         /// \brief Retrieving scores.
@@ -107,7 +107,7 @@ class ScoreManager
         /// \return If the given index exists, returns the score of the index.\n
         ///         Else, returns an empty score.
         /////////////////////////////////////////////////
-        Score GetScore(unsigned int index);
+        Score getScore(unsigned int index);
 
     protected:
 

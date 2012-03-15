@@ -52,7 +52,7 @@ class StateMenu : public GameState
         ///
         /// Processes all the user inputs.
         /////////////////////////////////////////////////
-        void HandleEvents();
+        void handleEvents();
 
         /////////////////////////////////////////////////
         /// \brief Logic.
@@ -61,14 +61,14 @@ class StateMenu : public GameState
         ///
         /// \param elapsedTime : Elapsed time since the last frame.
         /////////////////////////////////////////////////
-        void Logic(sf::Uint32 elapsedTime);
+        void logic(sf::Uint32 elapsedTime);
 
         /////////////////////////////////////////////////
         /// \brief Rendering.
         ///
         /// Draws on the menu screen on the window.
         /////////////////////////////////////////////////
-        void Render();
+        void render();
 
     protected:
 
@@ -77,7 +77,7 @@ class StateMenu : public GameState
         ///
         /// \param id : The menu entry to focus.
         /////////////////////////////////////////////////
-        void SetMenuFocus(MenuEntryID id);
+        void setMenuFocus(MenuEntryID id);
 
         /////////////////////////////////////////////////
         // Member Data

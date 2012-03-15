@@ -38,7 +38,7 @@ class StateHelp : public GameState
         ///
         /// Processes all the user inputs.
         /////////////////////////////////////////////////
-        void HandleEvents();
+        void handleEvents();
 
         /////////////////////////////////////////////////
         /// \brief Logic.
@@ -47,14 +47,14 @@ class StateHelp : public GameState
         ///
         /// \param elapsedTime : Elapsed time since the last frame.
         /////////////////////////////////////////////////
-        void Logic(sf::Uint32 elapsedTime);
+        void logic(sf::Uint32 elapsedTime);
 
         /////////////////////////////////////////////////
         /// \brief Rendering.
         ///
         /// Draws the help screen on the window.
         /////////////////////////////////////////////////
-        void Render();
+        void render();
 
     protected:
 

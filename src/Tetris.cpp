@@ -22,10 +22,10 @@
 Tetris::Tetris() : m_nextState(STATE_NULL)
 {
     // Initializations
-    m_window.Create(sf::VideoMode(600,600), "Tetris", sf::Style::Close);
-    m_music.OpenFromFile("resources/audio/tetris_theme.ogg");
-    m_music.SetVolume(60.0);
-    m_music.SetLoop(true);
+    m_window.create(sf::VideoMode(600,600), "Tetris", sf::Style::Close);
+    m_music.openFromFile("resources/audio/tetris_theme.ogg");
+    m_music.setVolume(60.0);
+    m_music.setLoop(true);
     m_currentState = new StateTitle(*this);
 
     // Initializing the seed for the rand() function
@@ -33,8 +33,8 @@ Tetris::Tetris() : m_nextState(STATE_NULL)
 
     // Setting the window icon
     sf::Image icon;
-    icon.LoadFromFile("resources/images/icon.png");
-    m_window.SetIcon(icon.GetWidth(), icon.GetHeight(), icon.GetPixelsPtr());
+    icon.loadFromFile("resources/images/icon.png");
+    m_window.setIcon(icon.getWidth(), icon.getHeight(), icon.getPixelsPtr());
 }
 
 
@@ -47,27 +47,30 @@ Tetris::~Tetris()
 
 
 /////////////////////////////////////////////////
-void Tetris::Run()
+void Tetris::run()
 {
+    // Frame clock
+    sf::Clock frameClock;
+
     // Playing the music
-    m_music.Play();
+    m_music.play();
 
     // Game loop
     while(m_nextState != STATE_EXIT)
     {
-        m_currentState->HandleEvents();
-        m_currentState->Logic(m_window.GetFrameTime());
-        ChangeState();
-        m_currentState->Render();
+        m_currentState->handleEvents();
+        m_currentState->logic(frameClock.restart().asMicroseconds());
+        changeState();
+        m_currentState->render();
     }
 
     // Stopping the music
-    m_music.Stop();
+    m_music.stop();
 }
 
 
 /////////////////////////////////////////////////
-void Tetris::ChangeState()
+void Tetris::changeState()
 {
     // Changes the game state if needed
     if(m_nextState != STATE_NULL && m_nextState != STATE_EXIT)
@@ -92,7 +95,7 @@ void Tetris::ChangeState()
         {
             // Casting the current state to retrieve the score in StatePlay
             StatePlay* statePlay = static_cast<StatePlay*>(m_currentState);
-            newState = new StateNewScore(*this, statePlay->GetScore());
+            newState = new StateNewScore(*this, statePlay->getScore());
             break;
         }
 
@@ -117,14 +120,14 @@ void Tetris::ChangeState()
 
 
 /////////////////////////////////////////////////
-void Tetris::SetNextState(GameStateID state)
+void Tetris::setNextState(GameStateID state)
 {
     m_nextState = state;
 }
 
 
 /////////////////////////////////////////////////
-sf::RenderWindow& Tetris::GetWindow()
+sf::RenderWindow& Tetris::getWindow()
 {
     return m_window;
 }

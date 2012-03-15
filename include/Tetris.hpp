@@ -45,7 +45,7 @@ class Tetris
         ///
         /// Plays the music and handles the game loop.
         /////////////////////////////////////////////////
-        void Run();
+        void run();
 
         /////////////////////////////////////////////////
         /// \brief Sets the next game states
@@ -55,14 +55,14 @@ class Tetris
         ///
         /// \param state : The ID of the next game state.
         /////////////////////////////////////////////////
-        void SetNextState(GameStateID state);
+        void setNextState(GameStateID state);
 
         /////////////////////////////////////////////////
         /// \brief Returns a reference to the window object.
         ///
         /// \return Reference to the window.
         /////////////////////////////////////////////////
-        sf::RenderWindow& GetWindow();
+        sf::RenderWindow& getWindow();
 
     protected:
 
@@ -73,7 +73,7 @@ class Tetris
         ///
         /// \see SetNextState
         /////////////////////////////////////////////////
-        void ChangeState();
+        void changeState();
 
         ////////////////////////////////////////////////////////////
         // Member data

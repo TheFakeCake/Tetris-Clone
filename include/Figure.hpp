@@ -40,7 +40,7 @@ class Figure : public GameObject
         ///
         /// Rotates the figure of 90 degrees (clockwise).
         /////////////////////////////////////////////////
-        void Rotate();
+        void rotate();
 
         /////////////////////////////////////////////////
         /// \brief Moves the figure.
@@ -49,35 +49,35 @@ class Figure : public GameObject
         ///
         /// \param direction : Direction of movement.
         /////////////////////////////////////////////////
-        void Move(Direction direction);
+        void move(Direction direction);
 
         /////////////////////////////////////////////////
         /// \brief Rendering.
         ///
         /// Draws the figure.
         /////////////////////////////////////////////////
-        void Draw();
+        void draw();
 
         /////////////////////////////////////////////////
         /// \brief Returns a constant reference to the figure's block grid.
         ///
         /// \return The reference to the block grid.
         /////////////////////////////////////////////////
-        const std::vector<std::vector< Block > >& GetGrid();
+        const std::vector<std::vector< Block > >& getGrid();
 
         /////////////////////////////////////////////////
         /// \brief Returns the grid size.
         ///
         /// \return Grid size.
         /////////////////////////////////////////////////
-        unsigned int GetGridSize();
+        unsigned int getGridSize();
 
         /////////////////////////////////////////////////
         /// \brief Returns the figure's block type.
         ///
         /// \return Block type.
         /////////////////////////////////////////////////
-        BlockType GetType();
+        BlockType getType();
 
         /////////////////////////////////////////////////
         /// \brief Tells if the figure is out of the map or not.
@@ -86,7 +86,7 @@ class Figure : public GameObject
         ///
         /// \return True if the figure is out of game.
         /////////////////////////////////////////////////
-        bool IsOutOfGame();
+        bool isOutOfGame();
 
         /////////////////////////////////////////////////
         /// \brief Sets the position for preview figure.
@@ -94,7 +94,7 @@ class Figure : public GameObject
         /// The preview figure has a custom position, so the preview position
         /// can be set with this method.
         /////////////////////////////////////////////////
-        void SetNextFigPos();
+        void setNextFigPos();
 
     protected:
 
@@ -105,7 +105,7 @@ class Figure : public GameObject
         ///
         /// \param gridSize : The grid size.
         /////////////////////////////////////////////////
-        void InitGrid(unsigned int gridSize);
+        void initGrid(unsigned int gridSize);
 
         /////////////////////////////////////////////////
         // Member Data

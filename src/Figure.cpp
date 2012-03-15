@@ -22,7 +22,7 @@ Figure::Figure(Tetris& tetris, BlockType type, sf::Texture& blocksSpritesheet) :
     switch(m_type)
     {
     case BLOCK_RED:
-        InitGrid(4);
+        initGrid(4);
         m_grid[0][2].type = m_type;
         m_grid[1][2].type = m_type;
         m_grid[2][2].type = m_type;
@@ -30,7 +30,7 @@ Figure::Figure(Tetris& tetris, BlockType type, sf::Texture& blocksSpritesheet) :
         break;
 
     case BLOCK_YELLOW:
-        InitGrid(2);
+        initGrid(2);
         m_grid[0][0].type = m_type;
         m_grid[0][1].type = m_type;
         m_grid[1][0].type = m_type;
@@ -38,7 +38,7 @@ Figure::Figure(Tetris& tetris, BlockType type, sf::Texture& blocksSpritesheet) :
         break;
 
     case BLOCK_BLUE:
-        InitGrid(3);
+        initGrid(3);
         m_grid[0][1].type = m_type;
         m_grid[1][1].type = m_type;
         m_grid[2][1].type = m_type;
@@ -46,7 +46,7 @@ Figure::Figure(Tetris& tetris, BlockType type, sf::Texture& blocksSpritesheet) :
         break;
 
     case BLOCK_PURPLE:
-        InitGrid(3);
+        initGrid(3);
         m_grid[0][1].type = m_type;
         m_grid[1][1].type = m_type;
         m_grid[2][1].type = m_type;
@@ -54,7 +54,7 @@ Figure::Figure(Tetris& tetris, BlockType type, sf::Texture& blocksSpritesheet) :
         break;
 
     case BLOCK_GREEN:
-        InitGrid(3);
+        initGrid(3);
         m_grid[0][1].type = m_type;
         m_grid[1][0].type = m_type;
         m_grid[1][1].type = m_type;
@@ -62,7 +62,7 @@ Figure::Figure(Tetris& tetris, BlockType type, sf::Texture& blocksSpritesheet) :
         break;
 
     case BLOCK_ORANGE:
-        InitGrid(3);
+        initGrid(3);
         m_grid[0][0].type = m_type;
         m_grid[0][1].type = m_type;
         m_grid[1][1].type = m_type;
@@ -70,7 +70,7 @@ Figure::Figure(Tetris& tetris, BlockType type, sf::Texture& blocksSpritesheet) :
         break;
 
     case BLOCK_BLACK:
-        InitGrid(3);
+        initGrid(3);
         m_grid[0][2].type = m_type;
         m_grid[0][1].type = m_type;
         m_grid[1][1].type = m_type;
@@ -84,7 +84,7 @@ Figure::Figure(Tetris& tetris, BlockType type, sf::Texture& blocksSpritesheet) :
 
 
 /////////////////////////////////////////////////
-void Figure::Rotate()
+void Figure::rotate()
 {
     m_outOfGame = false;
     std::vector<std::vector<Block> > gridCopy = m_grid;
@@ -95,7 +95,7 @@ void Figure::Rotate()
         for(unsigned int x = 0; x < m_gridSize; x++)
         {
             m_grid[y][x].type = gridCopy[m_gridSize-x-1][y].type;
-            m_grid[y][x].sprite.SetSubRect(gridCopy[m_gridSize-x-1][y].sprite.GetSubRect());
+            m_grid[y][x].sprite.setTextureRect(gridCopy[m_gridSize-x-1][y].sprite.getTextureRect());
 
             // checking for out of game block
             if(m_grid[y][x].type != BLOCK_NONE && m_grid[y][x].y < 0)
@@ -106,7 +106,7 @@ void Figure::Rotate()
 
 
 /////////////////////////////////////////////////
-void Figure::Move(Direction direction)
+void Figure::move(Direction direction)
 {
     int xMove = 0;
     int yMove = 0;
@@ -140,7 +140,7 @@ void Figure::Move(Direction direction)
             m_grid[y][x].x += xMove;
             m_grid[y][x].y += yMove;
 
-            m_grid[y][x].sprite.SetPosition(MAP_COORD_X + m_grid[y][x].x * BLOCK_SIZE,
+            m_grid[y][x].sprite.setPosition(MAP_COORD_X + m_grid[y][x].x * BLOCK_SIZE,
                                             MAP_COORD_Y + m_grid[y][x].y * BLOCK_SIZE);
 
             // ... checking for out of game block
@@ -152,7 +152,7 @@ void Figure::Move(Direction direction)
 
 
 /////////////////////////////////////////////////
-void Figure::Draw()
+void Figure::draw()
 {
     for(unsigned y = 0; y < m_gridSize; y++)
     {
@@ -161,7 +161,7 @@ void Figure::Draw()
             if(m_grid[y][x].type != BLOCK_NONE)
             {
                 if(m_previewNextFig || m_grid[y][x].y >= 0)
-                    m_window.Draw(m_grid[y][x].sprite);
+                    m_window.draw(m_grid[y][x].sprite);
             }
         }
     }
@@ -169,35 +169,35 @@ void Figure::Draw()
 
 
 /////////////////////////////////////////////////
-const std::vector<std::vector< Block > >& Figure::GetGrid()
+const std::vector<std::vector< Block > >& Figure::getGrid()
 {
     return m_grid;
 }
 
 
 /////////////////////////////////////////////////
-unsigned int Figure::GetGridSize()
+unsigned int Figure::getGridSize()
 {
     return m_gridSize;
 }
 
 
 /////////////////////////////////////////////////
-BlockType Figure::GetType()
+BlockType Figure::getType()
 {
     return m_type;
 }
 
 
 /////////////////////////////////////////////////
-bool Figure::IsOutOfGame()
+bool Figure::isOutOfGame()
 {
     return m_outOfGame;
 }
 
 
 /////////////////////////////////////////////////
-void Figure::SetNextFigPos()
+void Figure::setNextFigPos()
 {
     m_previewNextFig = true;
     float xOrigin = (float)PREVIEW_COORD_X - (float)m_gridSize / 2 * BLOCK_SIZE;
@@ -206,13 +206,13 @@ void Figure::SetNextFigPos()
     for(unsigned int y = 0; y < m_gridSize; y++)
     {
         for(unsigned int x = 0; x < m_gridSize; x++)
-            m_grid[y][x].sprite.SetPosition(xOrigin + x * BLOCK_SIZE, yOrigin + y * BLOCK_SIZE);
+            m_grid[y][x].sprite.setPosition(xOrigin + x * BLOCK_SIZE, yOrigin + y * BLOCK_SIZE);
     }
 }
 
 
 /////////////////////////////////////////////////
-void Figure::InitGrid(unsigned int gridSize)
+void Figure::initGrid(unsigned int gridSize)
 {
     m_grid.resize(gridSize, std::vector< Block >(gridSize));
 
@@ -226,10 +226,10 @@ void Figure::InitGrid(unsigned int gridSize)
             m_grid[y][x].x = x + NB_BLOCKS_WIDTH / 2 - gridSize / 2;
             m_grid[y][x].y = 0 - gridSize + y;
 
-            m_grid[y][x].sprite.SetTexture(m_blocksSpritesheet);
-            m_grid[y][x].sprite.SetPosition(MAP_COORD_X + m_grid[y][x].x * BLOCK_SIZE,
+            m_grid[y][x].sprite.setTexture(m_blocksSpritesheet);
+            m_grid[y][x].sprite.setPosition(MAP_COORD_X + m_grid[y][x].x * BLOCK_SIZE,
                                             MAP_COORD_Y + m_grid[y][x].y * BLOCK_SIZE);
-            m_grid[y][x].sprite.SetSubRect(sf::IntRect(m_type * BLOCK_SIZE, 0, BLOCK_SIZE, BLOCK_SIZE));
+            m_grid[y][x].sprite.setTextureRect(sf::IntRect(m_type * BLOCK_SIZE, 0, BLOCK_SIZE, BLOCK_SIZE));
         }
     }
 

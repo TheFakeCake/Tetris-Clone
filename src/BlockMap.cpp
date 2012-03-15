@@ -24,8 +24,8 @@ BlockMap::BlockMap(Tetris& tetris, sf::Texture& blocksSpritesheet) :
         {
             // Every blocks are empty
             m_map[y][x].type = BLOCK_NONE;
-            m_map[y][x].sprite.SetTexture(m_blocksSpritesheet);
-            m_map[y][x].sprite.SetPosition(MAP_COORD_X + x * BLOCK_SIZE, MAP_COORD_Y + y * BLOCK_SIZE);
+            m_map[y][x].sprite.setTexture(m_blocksSpritesheet);
+            m_map[y][x].sprite.setPosition(MAP_COORD_X + x * BLOCK_SIZE, MAP_COORD_Y + y * BLOCK_SIZE);
             m_map[y][x].x = x;
             m_map[y][x].y = y;
         }
@@ -34,10 +34,10 @@ BlockMap::BlockMap(Tetris& tetris, sf::Texture& blocksSpritesheet) :
 
 
 /////////////////////////////////////////////////
-bool BlockMap::Collision(Figure& fig)
+bool BlockMap::collision(Figure& fig)
 {
-    const std::vector<std::vector< Block > >& grid = fig.GetGrid();
-    unsigned int c = fig.GetGridSize();
+    const std::vector<std::vector< Block > >& grid = fig.getGrid();
+    unsigned int c = fig.getGridSize();
 
     // For each block of the figure ...
     for(unsigned int y = 0; y < c; y++)
@@ -66,10 +66,10 @@ bool BlockMap::Collision(Figure& fig)
 
 
 /////////////////////////////////////////////////
-void BlockMap::AddFigure(Figure& fig)
+void BlockMap::addFigure(Figure& fig)
 {
-    const std::vector<std::vector< Block > >& grid = fig.GetGrid();
-    unsigned int c = fig.GetGridSize();
+    const std::vector<std::vector< Block > >& grid = fig.getGrid();
+    unsigned int c = fig.getGridSize();
 
     // For each block of the figure's grid
     for(unsigned int y = 0; y < c; y++)
@@ -83,7 +83,7 @@ void BlockMap::AddFigure(Figure& fig)
             {
                 // Copy the figure block to into the map
                 m_map[grid[y][x].y][grid[y][x].x].type = grid[y][x].type;
-                m_map[grid[y][x].y][grid[y][x].x].sprite.SetSubRect(grid[y][x].sprite.GetSubRect());
+                m_map[grid[y][x].y][grid[y][x].x].sprite.setTextureRect(grid[y][x].sprite.getTextureRect());
             }
         }
     }
@@ -91,7 +91,7 @@ void BlockMap::AddFigure(Figure& fig)
 
 
 /////////////////////////////////////////////////
-unsigned int BlockMap::DestroyCompleteLines()
+unsigned int BlockMap::destroyCompleteLines()
 {
     unsigned int destroyedLines = 0;
 
@@ -122,7 +122,7 @@ unsigned int BlockMap::DestroyCompleteLines()
                 for(unsigned int x = 0; x < NB_BLOCKS_WIDTH; x++)
                 {
                     m_map[y2][x].type = m_map[y2-1][x].type;
-                    m_map[y2][x].sprite.SetSubRect(m_map[y2-1][x].sprite.GetSubRect());
+                    m_map[y2][x].sprite.setTextureRect(m_map[y2-1][x].sprite.getTextureRect());
                 }
             }
 
@@ -138,14 +138,14 @@ unsigned int BlockMap::DestroyCompleteLines()
 
 
 /////////////////////////////////////////////////
-void BlockMap::Draw()
+void BlockMap::draw()
 {
     for(int i = 0; i < NB_BLOCKS_HEIGHT; i++)
     {
         for(int j = 0; j < NB_BLOCKS_WIDTH; j++)
         {
             if(m_map[i][j].type != BLOCK_NONE)
-                m_window.Draw(m_map[i][j].sprite);
+                m_window.draw(m_map[i][j].sprite);
         }
     }
 }

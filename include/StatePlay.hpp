@@ -48,7 +48,7 @@ class StatePlay : public GameState
         ///
         /// Process the user inputs.
         /////////////////////////////////////////////////
-        void HandleEvents();
+        void handleEvents();
 
         /////////////////////////////////////////////////
         /// \brief Logic.
@@ -58,14 +58,14 @@ class StatePlay : public GameState
         ///
         /// \param elapsedTime : The elapsed time since the last frame.
         /////////////////////////////////////////////////
-        void Logic(sf::Uint32 elapsedTime);
+        void logic(sf::Uint32 elapsedTime);
 
         /////////////////////////////////////////////////
         /// \brief Rendering
         ///
         /// Draws the elements of the state on the window.
         /////////////////////////////////////////////////
-        void Render();
+        void render();
 
         /////////////////////////////////////////////////
         /// \brief Returns the score.
@@ -76,7 +76,7 @@ class StatePlay : public GameState
         ///
         /// \return The player's score.
         /////////////////////////////////////////////////
-        unsigned long GetScore();
+        unsigned long getScore();
 
     protected:
 
@@ -94,14 +94,14 @@ class StatePlay : public GameState
         ///
         /// \param nbLinesDestroyed : Number of lines destroyed.
         /////////////////////////////////////////////////
-        void IncScore(unsigned int nbLinesDestroyed);
+        void incScore(unsigned int nbLinesDestroyed);
 
         /////////////////////////////////////////////////
         /// \brief Updates the dynamic texts on the screen.
         ///
         /// Updates the content and the position of all the score texts on the screen.
         /////////////////////////////////////////////////
-        void UpdateTexts();
+        void updateTexts();
 
         /////////////////////////////////////////////////
         /// \brief Creates a random figure.
@@ -111,7 +111,7 @@ class StatePlay : public GameState
         ///
         /// \return Pointer to the random figure.
         /////////////////////////////////////////////////
-        Figure* GenerateRandomFig();
+        Figure* generateRandomFig();
 
 
         /////////////////////////////////////////////////

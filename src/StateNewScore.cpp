@@ -19,54 +19,54 @@
 StateNewScore::StateNewScore(Tetris& tetris, unsigned long newScore) : GameState(tetris), m_newScore(newScore), m_strName("")
 {
     // Resources loading
-    m_bgTexture.LoadFromFile("resources/images/newscore_background.png");
-    m_bgSprite.SetTexture(m_bgTexture);
+    m_bgTexture.loadFromFile("resources/images/newscore_background.png");
+    m_bgSprite.setTexture(m_bgTexture);
 
-    m_font.LoadFromFile("resources/fonts/visitor1.ttf");
+    m_font.loadFromFile("resources/fonts/visitor1.ttf");
 
     // Initializing the texts
     std::stringstream newScoreStr;
     newScoreStr << newScore;
 
-    m_textNewScore.SetFont(m_font);
-    m_textNewScore.SetColor(sf::Color(205, 5, 5));
-    m_textNewScore.SetString(newScoreStr.str());
-    m_textNewScore.SetPosition(m_window.GetWidth()/2 - m_textNewScore.GetRect().Width/2, 275);
+    m_textNewScore.setFont(m_font);
+    m_textNewScore.setColor(sf::Color(205, 5, 5));
+    m_textNewScore.setString(newScoreStr.str());
+    m_textNewScore.setPosition(m_window.getSize().x/2 - m_textNewScore.getGlobalBounds().width/2, 275);
 
-    m_textName.SetFont(m_font);
-    m_textName.SetColor(sf::Color(205, 5, 5));
-    m_textName.SetPosition(0, 395);
+    m_textName.setFont(m_font);
+    m_textName.setColor(sf::Color(205, 5, 5));
+    m_textName.setPosition(0, 395);
 }
 
 
 /////////////////////////////////////////////////
-void StateNewScore::HandleEvents()
+void StateNewScore::handleEvents()
 {
     sf::Event ev;
-    while(m_window.PollEvent(ev))
+    while(m_window.pollEvent(ev))
     {
         // X window button clicked
-        if(ev.Type == sf::Event::Closed)
+        if(ev.type == sf::Event::Closed)
         {
-            m_tetris.SetNextState(STATE_EXIT);
+            m_tetris.setNextState(STATE_EXIT);
         }
-        else if(ev.Type == sf::Event::KeyPressed)
+        else if(ev.type == sf::Event::KeyPressed)
         {
-            switch(ev.Key.Code)
+            switch(ev.key.code)
             {
             // Escape pressed
             case sf::Keyboard::Escape:
-                m_tetris.SetNextState(STATE_MENU);
+                m_tetris.setNextState(STATE_MENU);
                 break;
 
             // Backspace pressed
             case sf::Keyboard::Back:
-                DeleteChar();
+                deleteChar();
                 break;
 
             // Enter pressed
             case sf::Keyboard::Return:
-                SaveScore();
+                saveScore();
                 break;
 
             default:
@@ -74,44 +74,45 @@ void StateNewScore::HandleEvents()
             }
         }
         // Character entered
-        else if(ev.Type == sf::Event::TextEntered)
+        else if(ev.type == sf::Event::TextEntered)
         {
-            AddChar(ev.Text.Unicode);
+            addChar(ev.text.unicode);
         }
     }
 }
 
 
 /////////////////////////////////////////////////
-void StateNewScore::Logic(sf::Uint32 elapsedTime)
+void StateNewScore::logic(sf::Uint32 elapsedTime)
 {}
 
 
 /////////////////////////////////////////////////
-void StateNewScore::Render()
+void StateNewScore::render()
 {
-    m_window.Clear();
-    m_window.Draw(m_bgSprite);
-    m_window.Draw(m_textNewScore);
-    m_window.Draw(m_textName);
-    m_window.Display();
+    m_window.clear();
+    m_window.draw(m_bgSprite);
+    m_window.draw(m_textNewScore);
+    m_window.draw(m_textName);
+    m_window.display();
 }
 
 
 /////////////////////////////////////////////////
-void StateNewScore::DeleteChar()
+void StateNewScore::deleteChar()
 {
     if(m_strName.length() > 0)
     {
         m_strName.erase(m_strName.length() - 1);
-        m_textName.SetString(m_strName);
-        m_textName.SetX(m_window.GetWidth()/2 - m_textName.GetRect().Width/2);
+        m_textName.setString(m_strName);
+        m_textName.setPosition(m_window.getSize().x/2 - m_textName.getGlobalBounds().width/2,
+                               m_textName.getPosition().y);
     }
 }
 
 
 /////////////////////////////////////////////////
-void StateNewScore::AddChar(sf::Uint32 character)
+void StateNewScore::addChar(sf::Uint32 character)
 {
     // Player's name can't exceed 16 characters
     if(m_strName.length() < 16)
@@ -127,15 +128,16 @@ void StateNewScore::AddChar(sf::Uint32 character)
                 character = '_';
 
             m_strName.push_back(character);
-            m_textName.SetString(m_strName);
-            m_textName.SetX(m_window.GetWidth()/2 - m_textName.GetRect().Width/2);
+            m_textName.setString(m_strName);
+            m_textName.setPosition(m_window.getSize().x/2 - m_textName.getGlobalBounds().width/2,
+                                   m_textName.getPosition().y);
         }
     }
 }
 
 
 /////////////////////////////////////////////////
-void StateNewScore::SaveScore()
+void StateNewScore::saveScore()
 {
     // Checks if a name has been entered
     if(m_strName.length() == 0)
@@ -143,10 +145,10 @@ void StateNewScore::SaveScore()
 
     // Saves the score
     ScoreManager scores(5);
-    scores.LoadFromFile("resources/scores");
-    scores.AddScore(m_strName, m_newScore);
-    scores.Write("resources/scores");
+    scores.loadFromFile("resources/scores");
+    scores.addScore(m_strName, m_newScore);
+    scores.write("resources/scores");
 
     // Changing game state
-    m_tetris.SetNextState(STATE_HIGH_SCORES);
+    m_tetris.setNextState(STATE_HIGH_SCORES);
 }

@@ -56,7 +56,7 @@ class BlockMap : public GameObject
         ///
         /// \return True if a collision is detected. Else, returns False.
         /////////////////////////////////////////////////
-        bool Collision(Figure& fig);
+        bool collision(Figure& fig);
 
         /////////////////////////////////////////////////
         /// \brief Adds blocks to the map.
@@ -65,7 +65,7 @@ class BlockMap : public GameObject
         ///
         /// \param fig : Reference to a figure.
         /////////////////////////////////////////////////
-        void AddFigure(Figure& fig);
+        void addFigure(Figure& fig);
 
         /////////////////////////////////////////////////
         /// \brief Destroying complete map lines.
@@ -74,14 +74,14 @@ class BlockMap : public GameObject
         ///
         /// \return The number of destroyed lines.
         /////////////////////////////////////////////////
-        unsigned int DestroyCompleteLines();
+        unsigned int destroyCompleteLines();
 
         /////////////////////////////////////////////////
         /// \brief Rendering.
         ///
         /// Draws the map.
         /////////////////////////////////////////////////
-        void Draw();
+        void draw();
 
     protected:
 

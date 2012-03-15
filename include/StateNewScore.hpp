@@ -43,7 +43,7 @@ class StateNewScore : public GameState
         ///
         /// Process the user inputs.
         /////////////////////////////////////////////////
-        void HandleEvents();
+        void handleEvents();
 
         /////////////////////////////////////////////////
         /// \brief Logic.
@@ -52,14 +52,14 @@ class StateNewScore : public GameState
         ///
         /// \param elapsedTime : The elapsed time since the last frame.
         /////////////////////////////////////////////////
-        void Logic(sf::Uint32 elapsedTime);
+        void logic(sf::Uint32 elapsedTime);
 
         /////////////////////////////////////////////////
         /// \brief Rendering
         ///
         /// Draws the elements of the state on the window.
         /////////////////////////////////////////////////
-        void Render();
+        void render();
 
     protected:
 
@@ -68,7 +68,7 @@ class StateNewScore : public GameState
         ///
         /// Deletes the last character of the entered player's name.
         /////////////////////////////////////////////////
-        void DeleteChar();
+        void deleteChar();
 
         /////////////////////////////////////////////////
         /// \brief Adds a character.
@@ -78,14 +78,14 @@ class StateNewScore : public GameState
         ///
         /// \param character : The character to add.
         /////////////////////////////////////////////////
-        void AddChar(sf::Uint32 character);
+        void addChar(sf::Uint32 character);
 
         /////////////////////////////////////////////////
         /// \brief Score saving.
         ///
         /// Saves the score into the score file.
         /////////////////////////////////////////////////
-        void SaveScore();
+        void saveScore();
 
         /////////////////////////////////////////////////
         // Member Data

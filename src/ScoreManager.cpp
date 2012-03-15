@@ -21,7 +21,7 @@ ScoreManager::~ScoreManager()
 
 
 /////////////////////////////////////////////////
-void ScoreManager::LoadFromFile(std::string fileName)
+void ScoreManager::loadFromFile(std::string fileName)
 {
     m_scores.clear();
 
@@ -44,7 +44,7 @@ void ScoreManager::LoadFromFile(std::string fileName)
 
 
 /////////////////////////////////////////////////
-void ScoreManager::Write(std::string fileName)
+void ScoreManager::write(std::string fileName)
 {
     std::ofstream file;
     file.open(fileName.c_str());
@@ -63,7 +63,7 @@ void ScoreManager::Write(std::string fileName)
 
 
 /////////////////////////////////////////////////
-bool ScoreManager::IsNewScore(unsigned int score)
+bool ScoreManager::isNewScore(unsigned int score)
 {
     if(m_scores.size() < m_nbScores)
         return true;
@@ -79,7 +79,7 @@ bool ScoreManager::IsNewScore(unsigned int score)
 
 
 /////////////////////////////////////////////////
-void ScoreManager::AddScore(std::string player, unsigned int score)
+void ScoreManager::addScore(std::string player, unsigned int score)
 {
     bool added = false;
 
@@ -102,14 +102,14 @@ void ScoreManager::AddScore(std::string player, unsigned int score)
 
 
 /////////////////////////////////////////////////
-unsigned int ScoreManager::GetNbScores()
+unsigned int ScoreManager::getNbScores()
 {
     return m_scores.size();
 }
 
 
 /////////////////////////////////////////////////
-Score ScoreManager::GetScore(unsigned int index)
+Score ScoreManager::getScore(unsigned int index)
 {
     if(index < m_scores.size())
         return m_scores[index];
