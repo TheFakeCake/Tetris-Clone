@@ -12,7 +12,7 @@ Also, I used a font named "Visitor" that I took from here :
 http://www.dafont.com/fr/visitor.font
 
  ^  Note that a file is missing. I removed the resources/audio/tetris_theme.ogg
-/!\ filebecause it was copyrighted.
+/!\ file because it was copyrighted.
 
 ---------
 License :
