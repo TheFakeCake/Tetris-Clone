@@ -34,7 +34,7 @@ Tetris::Tetris() : m_nextState(STATE_NULL)
     // Setting the window icon
     sf::Image icon;
     icon.loadFromFile("resources/images/icon.png");
-    m_window.setIcon(icon.getWidth(), icon.getHeight(), icon.getPixelsPtr());
+    m_window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 }
 
 

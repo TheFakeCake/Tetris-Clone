@@ -60,7 +60,7 @@ void StateNewScore::handleEvents()
                 break;
 
             // Backspace pressed
-            case sf::Keyboard::Back:
+            case sf::Keyboard::BackSpace:
                 deleteChar();
                 break;
 

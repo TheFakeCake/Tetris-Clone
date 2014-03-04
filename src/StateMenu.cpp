@@ -23,8 +23,8 @@ StateMenu::StateMenu(Tetris& tetris) : GameState(tetris)
     m_bgSprite.setTexture(m_bgTexture);
 
     // Initializing the menu entries
-    int entryHeight = m_menuTexture.getHeight() / (MENU_LAST_ENTRY + 1);
-    int entryWidth = m_menuTexture.getWidth() / 2;
+    int entryHeight = m_menuTexture.getSize().y/ (MENU_LAST_ENTRY + 1);
+    int entryWidth = m_menuTexture.getSize().x / 2;
     m_menuEntries.resize(MENU_LAST_ENTRY + 1);
 
     for(int i = MENU_FIRST_ENTRY; i <= MENU_LAST_ENTRY; i++)
@@ -119,8 +119,8 @@ void StateMenu::render()
 void StateMenu::setMenuFocus(MenuEntryID id)
 {
     // Size of the entry sprite
-    int entryHeight = m_menuTexture.getHeight() / (MENU_LAST_ENTRY + 1);
-    int entryWidth = m_menuTexture.getWidth() / 2;
+    int entryHeight = m_menuTexture.getSize().y / (MENU_LAST_ENTRY + 1);
+    int entryWidth = m_menuTexture.getSize().x / 2;
 
     // Sets the sprites of the old and new focused entries
     m_menuEntries[m_focusedEntry].setTextureRect(sf::IntRect(0, m_focusedEntry * entryHeight, entryWidth, entryHeight));
